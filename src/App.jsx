@@ -1,21 +1,23 @@
-import { useDispatch, useSelector } from 'react-redux';
-import './App.css';
-import { fetchTodos } from './redux/slice/todo';
+import "./App.css";
+import Create from "./components/Create";
+import Navbar from "./components/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Read from "./components/Read";
+import Update from "./components/Update";
 
-function App() {
-	const dispatch = useDispatch();
-	const state = useSelector((state) => state);
-	console.log(state);
-	if (state.todo.isLoading) {
-		return <h2>Loading...</h2>;
-	}
-	return (
-		<>
-			<button onClick={() => dispatch(fetchTodos())}>Fetch Todos</button>
-			{state.todo.data &&
-				state.todo.data.map((obj) => <li key={obj.id}>{obj.title}</li>)}
-		</>
-	);
-}
+const App = () => {
+  return (
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<Create />} />
+          <Route exact path="/read" element={<Read />} />
+          <Route exact path="/edit/:id" element={<Update />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+};
 
 export default App;
